@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller
@@ -15,7 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('blog.index');
+        return view('blog.index', [
+            'posts' => Post::orderBy('created_at', 'desc')->get()
+        ]);
     }
 
     /**
@@ -25,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.create');
     }
 
     /**
@@ -34,9 +38,18 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        $request->validated();
+
+        Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'tags'  => $request->tags
+        ]);
+
+        return redirect(route('blog.create'))->with('message', 'Post created successfully!');
+
     }
 
     /**

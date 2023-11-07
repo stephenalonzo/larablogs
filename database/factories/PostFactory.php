@@ -19,7 +19,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->text(),
             'description' => $this->faker->text(),
-            'author' => $this->faker->name(),
+            'tags' => $this->faker->text(),
         ];
     }
 }
