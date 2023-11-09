@@ -20,27 +20,37 @@
   
         <div class="flex items-center gap-4">
           <div class="flex gap-4">
+            @auth
             <a
-              class="rounded-md border-2 border-purple-700 px-5 py-2.5 text-sm font-medium text-purple-700"
-              href="{{ route('blog.create') }}"
+            class="rounded-md border-2 border-purple-700 px-5 py-2.5 text-sm font-medium text-purple-700"
+            href="{{ route('blog.create') }}"
             >
               Create Post
             </a>
             <a
-              class="rounded-md bg-purple-700 px-5 py-2.5 text-sm font-medium text-white shadow"
-              href="{{ route('login') }}"
+            class="rounded-md border-2 border-purple-700 px-5 py-2.5 text-sm font-medium text-purple-700"
+            href="/logout"
             >
-              Login
+              Logout
             </a>
-  
-            <div class="flex">
-              <a
-                class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-purple-700"
-                href="{{ route('register') }}"
-              >
-                Register
-              </a>
-            </div>
+            @endauth
+            @guest
+            <a
+            class="rounded-md bg-purple-700 px-5 py-2.5 text-sm font-medium text-white shadow"
+            href="{{ route('login') }}"
+          >
+            Login
+          </a>
+
+          <div class="flex">
+            <a
+              class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-purple-700"
+              href="{{ route('register') }}"
+            >
+              Register
+            </a>
+          </div>
+            @endguest
           </div>
         </div>
       </div>

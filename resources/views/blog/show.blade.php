@@ -1,10 +1,13 @@
 @extends('layout')
 
 @section('content')
+
+@if (session()->has('message'))
+    {{ session('message') }}
+@endif
 <section class="px-4 py-6">
     <div class="container mx-auto space-y-8">
         <div class="space-y-4 flex flex-col items-center justify-center text-center">
-            <h3 class="text-sm font-semibold text-purple-700">Our Blog</h3>
             <h1 class="text-3xl font-semibold">{{ $post->title }}</h1>
             <div class="space-x-2 flex flex-row items-center">
                 <img src="{{ asset('images/49.png') }}" alt="" class="w-12">
@@ -16,6 +19,14 @@
         </div>
         <div>
             {!! $post->description !!}
+        </div>
+        <div class="flex flex-row items-center justify-end space-x-4">
+            <a href="{{ route('blog.edit', $post->id) }}" class="underline underline-offset-4 font-medium">Edit</a>
+            <form action="{{ route('blog.destroy', $post->id) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="font-medium text-purple-700">Delete</button>
+            </form>
         </div>
     </div>
 </section>

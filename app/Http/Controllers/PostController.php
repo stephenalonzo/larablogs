@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         return view('blog.index', [
-            'posts' => Post::orderBy('created_at', 'desc')->get()
+            'posts' => Post::latest()->filter(request(['search']))->get()
         ]);
     }
 
@@ -73,7 +73,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('blog.edit', [
+            'post' => Post::findOrFail($id)
+        ]);
     }
 
     /**
@@ -83,9 +85,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+        $request->validated();
+
+        Post::where('id', $id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'tags' => $request->tags
+        ]);
+
+        return redirect(route('blog.show', $id))->with('message', 'Post updated successfully!');
     }
 
     /**
@@ -96,6 +106,20 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+
+        return redirect(route('blog.index'))->with('message', 'Post deleted successfully!');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        Post::where('title', 'LIKE', "%{$search}%")
+            ->orWhere('tags', 'LIKE', "%{$search}%")
+            ->get();
+
+        return redirect(route('blog.index'));
+
     }
 }
