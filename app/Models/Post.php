@@ -11,8 +11,9 @@ class Post extends Model
 
     protected $fillable = [
         'title', 
+        'user_id',
         'description', 
-        'tags'
+        'category'
     ];
 
     public function scopeFilter($query, array $filters)
@@ -24,6 +25,20 @@ class Post extends Model
             $query->where('title', 'like', '%' . request('search') . '%');
 
         }
+
+    }
+
+    public function user()
+    {
+
+        return $this->belongsTo(User::class);
+
+    }
+
+    public function categories()
+    {
+
+        return $this->belongsToMany(Category::class);
 
     }
 

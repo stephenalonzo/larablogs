@@ -18,6 +18,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->text(),
+            'user_id' => $this->faker->randomNumber(),
             'description' => $this->faker->text(),
             'tags' => $this->faker->text(),
         ];

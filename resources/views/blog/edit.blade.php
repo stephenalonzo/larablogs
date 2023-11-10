@@ -12,7 +12,12 @@
             <textarea id="editor" name="description">
                 {!! $post->description !!}
             </textarea>
-            <input type="text" name="tags" id="" class="rounded-md border border-gray-300 w-full" value="{{ $post->tags }}">
+            <select name="category" id="">
+                @foreach ($post->categories as $category)
+                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    
+                @endforeach
+            </select>
             <button type="submit" class="rounded-md px-4 py-2 bg-green-700 text-white font-semibold">Update</button>
         </form>
     </div>

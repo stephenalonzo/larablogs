@@ -37,10 +37,10 @@
                         <a href="{{ route('blog.show', $post->id) }}"><h3 class="text-xl font-semibold">{{ $post->title }}</h3></a>
                         <p class="text-gray-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis perspiciatis inventore quod delectus dolorum mollitia?</p>
                     </div>
-                    <div class="space-x-2 flex flex-row items-center">
-                        <img src="{{ asset('images/49.png') }}" alt="" class="w-12">
+                    <div class="flex flex-row items-center space-x-4">
+                        <i class="fas fa-user-circle text-3xl"></i>
                         <div>
-                            <h5 class="font-semibold">Lorem, ipsum.</h5>
+                            <h5 class="font-semibold">{{ $post->user->name }}</h5>
                             <p class="text-gray-500 text-sm">November 06, 2023</p>
                         </div>
                     </div>

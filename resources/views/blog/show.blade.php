@@ -9,8 +9,8 @@
     <div class="container mx-auto space-y-8">
         <div class="space-y-4 flex flex-col items-center justify-center text-center">
             <h1 class="text-3xl font-semibold">{{ $post->title }}</h1>
-            <div class="space-x-2 flex flex-row items-center">
-                <img src="{{ asset('images/49.png') }}" alt="" class="w-12">
+            <div class="flex flex-row items-center space-x-4">
+                <i class="fas fa-user-circle text-3xl"></i>
                 <div>
                     <h5 class="font-semibold">Lorem, ipsum.</h5>
                     <p class="text-gray-500 text-sm">{{ date('F m, Y') }}</p>
@@ -20,6 +20,7 @@
         <div>
             {!! $post->description !!}
         </div>
+        @auth
         <div class="flex flex-row items-center justify-end space-x-4">
             <a href="{{ route('blog.edit', $post->id) }}" class="underline underline-offset-4 font-medium">Edit</a>
             <form action="{{ route('blog.destroy', $post->id) }}" method="post">
@@ -28,6 +29,7 @@
                 <button type="submit" class="font-medium text-purple-700">Delete</button>
             </form>
         </div>
+        @endauth
     </div>
 </section>
 {{-- FEATURED POST --}}

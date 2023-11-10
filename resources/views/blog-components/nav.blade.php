@@ -22,7 +22,7 @@
           <div class="flex gap-4">
             @auth
             <a
-            class="rounded-md border-2 border-purple-700 px-5 py-2.5 text-sm font-medium text-purple-700"
+            class="rounded-md border-2 border-purple-700 bg-purple-700 px-5 py-2.5 text-sm font-medium text-white"
             href="{{ route('blog.create') }}"
             >
               Create Post

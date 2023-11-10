@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\CategoryPost;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -41,11 +44,19 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $request->validated();
+        
+        $category = Category::find($request->category);
 
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
+            'user_id' => Auth::user()->id,
             'description' => $request->description,
-            'tags'  => $request->tags
+            'category'  => $category->title
+        ]);
+
+        CategoryPost::create([
+            'category_id' => $request->category,
+            'post_id'   => $post->id
         ]);
 
         return redirect(route('blog.create'))->with('message', 'Post created successfully!');
@@ -92,7 +103,7 @@ class PostController extends Controller
         Post::where('id', $id)->update([
             'title' => $request->title,
             'description' => $request->description,
-            'tags' => $request->tags
+            'category' => $request->category
         ]);
 
         return redirect(route('blog.show', $id))->with('message', 'Post updated successfully!');
