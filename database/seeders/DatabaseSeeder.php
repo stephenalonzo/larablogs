@@ -34,6 +34,18 @@ class DatabaseSeeder extends Seeder
         $category = Category::create([
             'title' => 'Design'
         ]);
+        $category = Category::create([
+            'title' => 'Science'
+        ]);
+        $category = Category::create([
+            'title' => 'Research'
+        ]);
+        $category = Category::create([
+            'title' => 'Presentation'
+        ]);
+        $category = Category::create([
+            'title' => 'Product'
+        ]);
         
         CategoryPost::create([
             'category_id' => $category->id,

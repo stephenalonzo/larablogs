@@ -23,10 +23,21 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'title' => 'required|max:255',
             'description' => 'required',
-            'category'  => 'required'
+            'category'  => 'required',
+            'image' => ['mimes:png,jpg', 'max:5048']
         ];
+
+        if (in_array($this->method(), ['POST']))
+        {
+
+            $rules['image'] = ['required', 'mimes:png,jpg', 'max:5048'];
+
+        }
+
+        return $rules;        
+
     }
 }

@@ -13,7 +13,8 @@ class Post extends Model
         'title', 
         'user_id',
         'description', 
-        'category'
+        'category',
+        'image'
     ];
 
     public function scopeFilter($query, array $filters)
@@ -22,7 +23,15 @@ class Post extends Model
         if ($filters['search'] ?? false)
         {
 
-            $query->where('title', 'like', '%' . request('search') . '%');
+            $query->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('category', 'like', '%' . request('search') . '%');
+
+        }
+
+        if ($filters['category'] ?? false)
+        {
+
+            $query->where('category', 'like', '%' . request('category') . '%');
 
         }
 

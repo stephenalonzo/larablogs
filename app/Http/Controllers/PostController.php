@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
         return view('blog.index', [
-            'posts' => Post::latest()->filter(request(['search']))->get()
+            'posts' => Post::latest()->filter(request(['search', 'category']))->get()
         ]);
     }
 
@@ -32,7 +32,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        return view('blog.create', [
+            'categories' => Category::all() 
+        ]);
     }
 
     /**
@@ -51,7 +53,8 @@ class PostController extends Controller
             'title' => $request->title,
             'user_id' => Auth::user()->id,
             'description' => $request->description,
-            'category'  => $category->title
+            'category'  => $category->title,
+            'image' => $request->image->store('images', 'public')
         ]);
 
         CategoryPost::create([
@@ -85,7 +88,8 @@ class PostController extends Controller
     public function edit($id)
     {
         return view('blog.edit', [
-            'post' => Post::findOrFail($id)
+            'post' => Post::findOrFail($id),
+            'categories' => Category::all() 
         ]);
     }
 
@@ -100,10 +104,13 @@ class PostController extends Controller
     {
         $request->validated();
 
+        $category = Category::find($request->category);
+
         Post::where('id', $id)->update([
             'title' => $request->title,
             'description' => $request->description,
-            'category' => $request->category
+            'category' => $category->title,
+            'image' => $request->image->store('images', 'public')
         ]);
 
         return redirect(route('blog.show', $id))->with('message', 'Post updated successfully!');
@@ -133,4 +140,5 @@ class PostController extends Controller
         return redirect(route('blog.index'));
 
     }
+
 }

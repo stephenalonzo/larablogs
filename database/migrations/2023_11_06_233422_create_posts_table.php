@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('category')->default('Design');
+            $table->longText('image')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
