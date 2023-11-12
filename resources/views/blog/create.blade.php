@@ -2,8 +2,10 @@
 
 @section('content')
 
-@if (session()->has('message'))
-    {{ session('message') }}
+@if (session()->has('store_success'))
+<div class="px-4 py-2 rounded-md bg-green-100 text-green-500 w-full">
+    {{ session('store_success') }}
+</div>
 @endif
 
 <section class="px-4 py-6">
@@ -38,9 +40,16 @@
                         {{ $message }}
                     </p>
                 @enderror
-                <div class="flex flex-row items-center space-x-4">
-                    <label for="" class="font-semibold w-1/2">Upload an image:</label>
-                    <input type="file" name="image" id="" class="px-4 py-2 rounded-md border border-gray-300 w-full">
+                <div class="flex flex-col items-end space-y-2">
+                    <div class="flex flex-row items-center space-x-4">
+                        <label for="" class="font-semibold w-1/2">Upload an image:</label>
+                        <input type="file" name="image" id="" class="px-4 py-2 rounded-md border border-gray-300 w-full">
+                    </div>
+                    @error('image')
+                    <p class="text-red-500">
+                        {{ $message }}
+                    </p>
+                @enderror
                 </div>
             </div>
             <button type="submit" class="rounded-md px-4 py-2 bg-purple-700 text-white font-semibold">Submit</button>

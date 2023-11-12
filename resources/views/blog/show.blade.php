@@ -2,12 +2,24 @@
 
 @section('content')
 
-@if (session()->has('message'))
-    {{ session('message') }}
+@if (session()->has('update_success'))
+<div class="px-4 py-2 rounded-md bg-green-100 text-green-500 w-full">
+    {{ session('update_success') }}
+</div>
+@endif
+@if (session()->has('comment_store_success'))
+<div class="px-4 py-2 rounded-md bg-green-100 text-green-500 w-full">
+    {{ session('comment_store_success') }}
+</div>
+@endif
+@if (session()->has('comment_destroy_success'))
+<div class="px-4 py-2 rounded-md bg-green-100 text-green-500 w-full">
+    {{ session('comment_destroy_success') }}
+</div>
 @endif
 <section class="px-4 py-6">
     <div class="container mx-auto text-left">
-        <a href="{{ url()->previous() }}" class="w-24 flex flex-row items-center space-x-4 px-4 py-2 rounded-md bg-purple-700 text-white font-medium">
+        <a href="/" class="w-24 flex flex-row items-center space-x-4 px-4 py-2 rounded-md bg-purple-700 text-white font-medium">
             <i class="fas fa-arrow-left"></i>
             <span>Back</span>
         </a>
@@ -36,7 +48,7 @@
             <form action="{{ route('blog.destroy', $post->id) }}" method="post" class="m-0 p-0">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="font-medium text-purple-700">Delete</button>
+                <button type="submit" class="font-medium text-purple-700" onclick="confirmDelete()">Delete</button>
             </form>
         </div>
         @endauth
@@ -73,7 +85,7 @@
                     <form action="{{ route('comment.destroy', $comment->id) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="fas fa-trash text-purple-700" onclick="confirmDelete()"></button>
+                        <button type="submit" class="fas fa-trash text-purple-700"></button>
                     </form>
                 </div>
                 <p>{{ $comment->comment }}</p>
@@ -86,6 +98,13 @@
 <script>
     function confirmDelete()
     {
-        confirm('Are you sure you want to delete the comment?');
+        let f = confirm('Are you sure you want to delete this post');
+
+        if (f == false)
+        {
+
+            return event.preventDefault();
+
+        }
     }
 </script>

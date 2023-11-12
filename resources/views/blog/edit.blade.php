@@ -1,10 +1,6 @@
 @extends('layout')
 
 @section('content')
-@if (session()->has('message'))
-    {{ session('message') }}
-@endif
-
 <section class="px-4 py-6">
     <div class="container mx-auto space-y-6">
         <h1 class="font-semibold text-3xl">Edit a post</h1>

@@ -23,18 +23,16 @@
     </div>
 </section>
 <hr class="container mx-auto">
-{{-- OTHER POSTS --}}
 <section class="px-4 py-6">
     <div class="container mx-auto">
         <div class="grid grid-cols-12 gap-6">
-            {{-- {{ dd($posts) }} --}}
             @foreach ($posts as $post)
-            <div class="col-span-4 space-y-6 flex flex-col items-start justify-between">
+            <div class="col-span-4 gap-6 flex flex-col items-start justify-between">
                 <img src="{{ asset('storage/' . $post->image) }}" alt="" class="w-full h-full rounded-md">
-                <div class="flex flex-col items-start justify-between space-y-6 w-full">
+                <div class="flex flex-col items-start justify-between space-y-4 w-full">
                     <div class="flex flex-row items-center space-x-4">
                         <h5 class="font-semibold text-purple-700 text-base">{{ $post->user->name }}</h5>
-                        <p class="text-gray-500 text-xs">November 06, 2023</p>
+                        <p class="text-gray-500 text-xs">{{ date('F d, Y', strtotime($post->created_at)) }}</p>
                     </div>
                     <div class="space-y-2 w-full">
                         <div class="flex flex-row items-center justify-between">

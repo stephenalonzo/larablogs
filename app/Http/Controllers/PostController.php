@@ -46,7 +46,7 @@ class PostController extends Controller
             'post_id'   => $post->id
         ]);
 
-        return redirect(route('blog.create'))->with('message', 'Post created successfully!');
+        return redirect(route('blog.create'))->with('store_success', 'Post created successfully!');
 
     }
 
@@ -74,18 +74,27 @@ class PostController extends Controller
         Post::where('id', $id)->update([
             'title' => $request->title,
             'description' => $request->description,
-            'category' => $category->title,
-            'image' => $request->image->store('images', 'public')
+            'category' => $category->title
         ]);
 
-        return redirect(route('blog.show', $id))->with('message', 'Post updated successfully!');
+        if ($request->has('image')) 
+        {
+
+            Post::where('id', $id)->update([
+                'image' => $request->image->store('images', 'public')
+            ]);
+
+        }
+
+        return redirect(route('blog.show', $id))->with('update_success', 'Post updated successfully!');
+        
     }
 
     public function destroy($id)
     {
         Post::destroy($id);
 
-        return redirect(route('blog.index'))->with('message', 'Post deleted successfully!');
+        return redirect(route('blog.index'))->with('destroy_success', 'Post deleted successfully!');
     }
 
     public function search(Request $request)

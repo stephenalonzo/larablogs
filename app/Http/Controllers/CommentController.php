@@ -30,7 +30,7 @@ class CommentController extends Controller
             'post_id' => $post->id
         ]);
 
-        return redirect(route('blog.show', $post->id))->with('message', 'Thank you for your comment!');
+        return redirect(route('blog.show', $post->id))->with('comment_store_success', 'Thank you for your comment!');
 
     }
 
@@ -43,7 +43,7 @@ class CommentController extends Controller
         {
             
             Comment::destroy($comment->id); 
-            return redirect(route('blog.show', $post['post_id']))->with('message', 'Comment deleted successfully!');
+            return redirect(route('blog.show', $post['post_id']))->with('comment_destroy_success', 'Comment deleted successfully!');
             
         }
 
