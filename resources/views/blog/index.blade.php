@@ -30,24 +30,26 @@
             {{-- {{ dd($posts) }} --}}
             @foreach ($posts as $post)
             <div class="col-span-4 space-y-6 flex flex-col items-start justify-between">
-                <img src="{{ asset('storage/' . $post->image) }}" alt="" class="w-full h-full">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="" class="w-full h-full rounded-md">
                 <div class="flex flex-col items-start justify-between space-y-6 w-full">
+                    <div class="flex flex-row items-center space-x-4">
+                        <h5 class="font-semibold text-purple-700 text-base">{{ $post->user->name }}</h5>
+                        <p class="text-gray-500 text-xs">November 06, 2023</p>
+                    </div>
+                    <div class="space-y-2 w-full">
+                        <div class="flex flex-row items-center justify-between">
+                            <a href="{{ route('blog.show', $post->id) }}">
+                                <h3 class="text-xl font-semibold">{{ $post->title }}</h3>
+                            </a>
+                            <a href="{{ route('blog.show', $post->id) }}"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                        <p class="text-gray-500">
+                            {{ strip_tags($post->description) }}
+                        </p>
+                    </div>
                     <a href="/?category={{ $post->category }}" class="px-3 py-1 rounded-full bg-purple-200 text-xs text-purple-700">
                         {{ $post->category }}
                     </a>
-                    <div class="space-y-2">
-                        <a href="{{ route('blog.show', $post->id) }}"><h3 class="text-xl font-semibold">{{ $post->title }}</h3></a>
-                        <p class="text-gray-500">
-                            {!! $post->description !!}
-                        </p>
-                    </div>
-                    <div class="flex flex-row items-center space-x-4">
-                        <i class="fas fa-user-circle text-3xl"></i>
-                        <div>
-                            <h5 class="font-semibold">{{ $post->user->name }}</h5>
-                            <p class="text-gray-500 text-sm">November 06, 2023</p>
-                        </div>
-                    </div>
                 </div>
             </div>
             @endforeach
