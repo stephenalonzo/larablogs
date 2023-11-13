@@ -14,7 +14,8 @@ class Post extends Model
         'user_id',
         'description', 
         'category',
-        'image'
+        'image',
+        'mins_to_read'
     ];
 
     public function scopeFilter($query, array $filters)

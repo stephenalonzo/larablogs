@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('category')->default('Design');
             $table->longText('image')->nullable();
+            $table->bigInteger('mins_to_read');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

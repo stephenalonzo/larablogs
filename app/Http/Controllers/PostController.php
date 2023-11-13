@@ -15,9 +15,11 @@ class PostController extends Controller
 {
     public function index()
     {
+        
         return view('blog.index', [
-            'posts' => Post::latest()->filter(request(['search', 'category']))->get()
+            'posts' => Post::latest()->filter(request(['category', 'search']))->paginate(5)
         ]);
+
     }
 
     public function create()
@@ -29,16 +31,24 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
+
         $request->validated();
         
         $category = Category::find($request->category);
+
+        $length = strlen($request->description);
+
+        $count = $length / 200;
+
+        // dd(round($count));
 
         $post = Post::create([
             'title' => $request->title,
             'user_id' => Auth::user()->id,
             'description' => $request->description,
             'category'  => $category->title,
-            'image' => $request->image->store('images', 'public')
+            'image' => $request->image->store('images', 'public'),
+            'mins_to_read' => $count
         ]);
 
         CategoryPost::create([

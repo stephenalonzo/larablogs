@@ -18,18 +18,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Post::factory(10)->create();
-
+        
         $user = User::factory()->create([
             'name' => 'Stephen',
             'email' => 'stephen@email.com'
         ]);
 
-        $post = Post::create([
-            'title' => 'Test',
-            'user_id' => $user->id,
-            'description' => 'Test'
+        $posts = Post::factory(15)->create([
+            'user_id' => $user->id
         ]);
+
+        // $post = Post::create([
+        //     'title' => 'Test',
+        //     'user_id' => $user->id,
+        //     'description' => 'Test'
+        // ]);
 
         $category = Category::create([
             'title' => 'Design'
@@ -47,10 +50,15 @@ class DatabaseSeeder extends Seeder
             'title' => 'Product'
         ]);
         
-        CategoryPost::create([
-            'category_id' => $category->id,
-            'post_id'   => $post->id
-        ]);
+        foreach ($posts as $post)
+        {
+
+            CategoryPost::create([
+                'category_id' => $category->id,
+                'post_id'   => $post->id
+            ]);
+
+        }
 
     }
 }
